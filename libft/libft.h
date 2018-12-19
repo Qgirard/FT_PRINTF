@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:55:13 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/17 16:42:19 by qgirard          ###   ########.fr       */
+/*   Updated: 2018/12/19 19:02:56 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ int					get_next_line(const int fd, char **line);
 char				*ft_strnjoinf(char *s1, char *s2, size_t rm, size_t len);
 char				*ft_itoa_base(int n, int base);
 char				*ft_toupperstr(char *str);
+char				*ft_tochartostr(int i);
+char				*ft_utoa_base(unsigned int n, int base);
 
 #endif

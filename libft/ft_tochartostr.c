@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tochartostr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/13 13:19:46 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/19 19:32:20 by qgirard          ###   ########.fr       */
+/*   Created: 2018/12/19 18:22:57 by qgirard           #+#    #+#             */
+/*   Updated: 2018/12/19 18:31:59 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int		main(void)
+char	*ft_tochartostr(int i)
 {
-//	int fd = 42;
-//	char *str = "DEMIE VOLEE PAVARD";
-	//if (ft_printf("CINQ DOIGTS DE LA MAIN") == 0)
-	if (ft_printf("PRINTF = %u\n", 42) == 0)
-		return (1);
-	return (0);
+	unsigned char	c;
+	char			*str;
+
+	if (!(str = (char *)ft_memalloc(sizeof(char))))
+		return (NULL);
+	c = i;
+	str[0] = c;
+	str[1] = '\0';
+	return (str);
 }

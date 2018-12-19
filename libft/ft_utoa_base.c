@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_utoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/17 13:23:29 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/19 18:46:59 by qgirard          ###   ########.fr       */
+/*   Created: 2018/12/19 19:01:45 by qgirard           #+#    #+#             */
+/*   Updated: 2018/12/19 19:09:29 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_converter(int n, long i, long j, int base)
+static char	*ft_converter(unsigned int n, long i, long j, int base)
 {
 	char *str;
 
@@ -20,11 +20,6 @@ static char	*ft_converter(int n, long i, long j, int base)
 		return (NULL);
 	str[j] = '\0';
 	j--;
-	if (n < 0)
-	{
-		str[0] = '-';
-		n = -n;
-	}
 	if (n == 0)
 		str[j] = '0';
 	while (n != 0)
@@ -39,16 +34,13 @@ static char	*ft_converter(int n, long i, long j, int base)
 	return (str);
 }
 
-char		*ft_itoa_base(int n, int base)
+char		*ft_utoa_base(unsigned int n, int base)
 {
-	long	i;
-	long	j;
-	long	k;
-
+	long			i;
+	long			j;
+	unsigned long	k;
 	i = 0;
 	k = n;
-	if (n == -2147483648 && base == 10)
-		return (ft_strdup("-2147483648"));
 	if (n <= 0)
 		i = 1;
 	while (k != 0)

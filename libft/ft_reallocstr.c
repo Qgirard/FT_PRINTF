@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_reallocstr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/14 12:51:21 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/20 14:09:23 by qgirard          ###   ########.fr       */
+/*   Created: 2018/12/20 14:57:05 by qgirard           #+#    #+#             */
+/*   Updated: 2018/12/20 15:26:22 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+char	*ft_reallocstr(char *ptr, size_t size)
 {
 	char	*new;
 
@@ -20,15 +20,17 @@ void	*ft_realloc(void *ptr, size_t size)
 	{
 		if (!(new = (char *)malloc(1)))
 			return (NULL);
-		ft_memdel(&ptr);
+		new[0] = '\0';
+		ft_strdel(&ptr);
 		return (new);
 	}
-	if (!(new = (char *)malloc(size)))
+	if (!(new = (char *)malloc(sizeof(char) * (size + 1))))
 		return (NULL);
+	new[size] = '\0';
 	if (ptr)
 	{
-		ft_memcpy(new, ptr, size);
-		ft_memdel(&ptr);
+		ft_strcpy(new, ptr);
+		ft_strdel(&ptr);
 	}
 	return (new);
 }

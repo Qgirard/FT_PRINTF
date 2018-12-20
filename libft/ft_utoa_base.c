@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:01:45 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/19 19:09:29 by qgirard          ###   ########.fr       */
+/*   Updated: 2018/12/20 15:25:20 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char		*ft_utoa_base(unsigned int n, int base)
 	long			i;
 	long			j;
 	unsigned long	k;
+
 	i = 0;
 	k = n;
 	if (n <= 0)

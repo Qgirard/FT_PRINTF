@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 19:01:18 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/19 19:28:46 by qgirard          ###   ########.fr       */
+/*   Updated: 2018/12/20 19:05:10 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	checkprecision(const char **format, t_check **stock)
 	checksize(format, stock);
 }
 
-void	checklen(const char **format, t_check **stock)
+void	checkwidth(const char **format, t_check **stock)
 {
 	char	*tmp;
 	int		i;
@@ -78,26 +78,26 @@ void	checklen(const char **format, t_check **stock)
 		i++;
 	}
 	if (i > 0)
-		(*stock)->len = ft_atoi(tmp);
+		(*stock)->width = ft_atoi(tmp);
 	else
-		(*stock)->len = 0;
+		(*stock)->width = 0;
 	*format = *format + i;
 	ft_strdel(&tmp);
-	printf("LEN = %d\n", (*stock)->len);
+	printf("WIDTH = %d\n", (*stock)->width);
 	checkprecision(format, stock);
 }
 
 void	checkoption2(const char **format, t_check **stock)
 {
-	if ((*format)[1] == '#')
+	if ((*format)[0] == '#')
 		(*stock)->option2 = '#';
-	else if ((*format)[1] == '0')
+	else if ((*format)[0] == '0')
 		(*stock)->option2 = '0';
-	else if ((*format)[1] == '-')
+	else if ((*format)[0] == '-')
 		(*stock)->option2 = '-';
-	else if ((*format)[1] == '+')
+	else if ((*format)[0] == '+')
 		(*stock)->option2 = '+';
-	else if ((*format)[1] == ' ')
+	else if ((*format)[0] == ' ')
 		(*stock)->option2 = ' ';
 	else
 		(*stock)->option2 = 0;
@@ -105,7 +105,7 @@ void	checkoption2(const char **format, t_check **stock)
 		*format = *format + 1;
 	printf("OPTION = %d\n", (*stock)->option);
 	printf("OPTION2 = %d\n", (*stock)->option2);
-	checklen(format, stock);
+	checkwidth(format, stock);
 }
 
 void	checkoptions(const char **format, t_check **stock)

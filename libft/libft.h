@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:55:13 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/19 19:02:56 by qgirard          ###   ########.fr       */
+/*   Updated: 2018/12/20 15:22:39 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ char				*ft_itoa_base(int n, int base);
 char				*ft_toupperstr(char *str);
 char				*ft_tochartostr(int i);
 char				*ft_utoa_base(unsigned int n, int base);
+char				*ft_reallocstr(char *ptr, size_t size);
 
 #endif

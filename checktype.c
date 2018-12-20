@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 14:53:34 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/19 18:28:36 by qgirard          ###   ########.fr       */
+/*   Updated: 2018/12/20 19:07:54 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	checktype(const char **format, t_check **stock)
 		(*stock)->type = 'X';
 	else if ((*format)[0] == 'f')
 		(*stock)->type = 'f';
+	else if ((*format)[0] == '%' || (*format)[0] == 'b')
+		(*stock)->type = ((*format)[0] == '%') ? '%' : 'b';
 	else
 		(*stock)->type = 0;
 	printf("TYPE = %d\n", (*stock)->type);

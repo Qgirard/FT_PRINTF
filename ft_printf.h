@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 13:12:04 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/20 15:47:54 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/03 17:25:32 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct	s_check
 	int		option;
 	int		option2;
 	int		width;
-	int		precision;
+	int		prec;
 	char	*size;
 	int		type;
 	int		lenstr;
@@ -33,5 +33,7 @@ void			checkoptions(const char **format, t_check **stock);
 void			checktype(const char **format, t_check **stock);
 void			convertinstr(char **str, t_check *stock, va_list vl);
 void			convertwidth(char **str, t_check *stock);
+void			convertinstrwsize(char **str, t_check *stock, va_list vl);
+void			convertprecision(char **str, t_check *stock, va_list vl);
 
 #endif

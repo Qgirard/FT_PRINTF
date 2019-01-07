@@ -6,12 +6,11 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 14:53:34 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/20 19:07:54 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/07 14:45:32 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 void	checktype(const char **format, t_check **stock)
 {
@@ -39,6 +38,5 @@ void	checktype(const char **format, t_check **stock)
 		(*stock)->type = ((*format)[0] == '%') ? '%' : 'b';
 	else
 		(*stock)->type = 0;
-	printf("TYPE = %d\n", (*stock)->type);
 	*format = *format + 1;
 }

@@ -6,7 +6,7 @@
 #    By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 16:43:37 by qgirard           #+#    #+#              #
-#    Updated: 2018/12/20 14:59:12 by qgirard          ###   ########.fr        #
+#    Updated: 2019/01/03 15:16:01 by qgirard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC = ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c \
 		ft_concat_params.c ft_is_sort.c ft_swap.c ft_lstcount.c ft_printlist.c \
 		ft_realloc.c ft_strjoinf.c get_next_line.c ft_strnjoinf.c \
 		ft_itoa_base.c ft_toupperstr.c ft_tochartostr.c ft_utoa_base.c \
-		ft_reallocstr.c
+		ft_reallocstr.c ft_ltoa.c ft_ultoa_base.c ft_lltoa.c ft_stoa.c
 
 OBJ = $(SRC:.c=.o)
 

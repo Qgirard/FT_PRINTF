@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 13:11:40 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/19 18:29:03 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/07 16:22:41 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		checkpercent(const char **format, char **str)
 int		ft_printf(const char *format, ...)
 {
 	va_list	vl;
+	int		i;
 	char	*str;
 	t_check *stock;
 
@@ -50,6 +51,7 @@ int		ft_printf(const char *format, ...)
 	va_end(vl);
 	free(stock);
 	ft_putstr(str);
+	i = ft_strlen(str);
 	ft_strdel(&str);
-	return (1);
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:55:13 by qgirard           #+#    #+#             */
-/*   Updated: 2018/12/20 15:22:39 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/03 14:45:08 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <string.h>
+# include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
@@ -104,5 +105,9 @@ char				*ft_toupperstr(char *str);
 char				*ft_tochartostr(int i);
 char				*ft_utoa_base(unsigned int n, int base);
 char				*ft_reallocstr(char *ptr, size_t size);
+char				*ft_ltoa(long n);
+char				*ft_ultoa_base(unsigned long n, int base);
+char				*ft_lltoa(long long n);
+char				*ft_stoa(short n);
 
 #endif

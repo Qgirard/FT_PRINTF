@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 19:01:18 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/07 17:01:45 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/07 17:42:29 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,11 @@ void	checkoptions(const char **format, t_check **stock)
 	else if ((*format)[1] == '+')
 		(*stock)->option = '+';
 	else if ((*format)[1] == ' ')
+	{
 		(*stock)->option = ' ';
+		while ((*format)[2] == ' ')
+		 	*format = *format + 1;
+	}
 	else
 		(*stock)->option = 0;
 	if ((*stock)->option != 0)

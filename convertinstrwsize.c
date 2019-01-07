@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 14:00:18 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/03 16:10:26 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/07 17:44:54 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	convertinstrwsize2(char **str, t_check *stock, va_list vl)
 	else if (stock->type == 'X')
 		*str = ft_strjoinf(*str,
 		ft_toupperstr(ft_ultoa_base(va_arg(vl, unsigned long long), 16)), 3);
-	convertprecision(str, stock, vl);
+	checksignerror(str, stock, vl);
 }
 
 void	convertinstrwsize(char **str, t_check *stock, va_list vl)
@@ -57,5 +57,5 @@ void	convertinstrwsize(char **str, t_check *stock, va_list vl)
 	else if (stock->type == 'X')
 		*str = ft_strjoinf(*str,
 		ft_toupperstr(ft_ultoa_base(va_arg(vl, unsigned long), 16)), 3);
-	convertprecision(str, stock, vl);
+	checksignerror(str, stock, vl);
 }

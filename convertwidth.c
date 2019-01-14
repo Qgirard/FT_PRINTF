@@ -6,52 +6,117 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:47:23 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/03 17:44:25 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/14 16:11:12 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-void	convertwidth2(char **str, t_check *stock)
+int		convertwidtherror(char **str, t_check **stock, char **tmp, char **ptr)
+{
+	if (!(*str = ((*stock)->type == 'x') ? ft_strjoinf(*str, "0x", 1) :
+	ft_strjoinf(*str, "0X", 1)))
+		return (convertprecisionerr(tmp, ptr, 3));
+	if (!(*str = ft_strjoinf(*str, *ptr, 3)))
+		return (convertprecisionerr(tmp, ptr, 3));
+	if (!(*str = ft_strjoinf(*str, *tmp, 3)))
+		return (convertprecisionerr(tmp, ptr, 1));
+	return (1);
+}
+
+int		convertwidthoptions(char **str, t_check **stock)
 {
 	char	*tmp;
 	char	*ptr;
 	int		i;
 
 	i = 0;
-	ptr = ft_reallocstr(NULL, stock->width - stock->sizetype);
-	while (i < stock->width - stock->sizetype)
-		ptr[i++] = ((stock->option == '0' || stock->option2 == '0') &&
-		(stock->type != 's' && stock->type != 'c')) ? '0' : ' ';
-	i = ft_strlen(*str) - stock->sizetype;
-	tmp = ft_strsub(*str, i, stock->sizetype);
-	while ((*str)[i])
-		(*str)[i++] = '\0';
-	*str = ft_strjoinf(*str, ptr, 3);
-	*str = ft_strjoinf(*str, tmp, 3);
+	(*stock)->sizetype = ft_strlen(*str) - (*stock)->lenstr;
+	if (!(ptr = ft_strsub(*str, 0, (*stock)->lenstr)))
+		return (0);
+	if (!(tmp = ft_strsub(*str, (*stock)->lenstr + 2, ft_strlen(*str))))
+		return (convertprecisionerr(&tmp, &ptr, 2));
+	ft_strdel(str);
+	if (!(*str = ft_strdup(ptr)))
+		return (convertprecisionerr(&tmp, &ptr, 3));
+	ft_strdel(&ptr);
+	if (!(ptr = ft_reallocstr(NULL, (*stock)->width - (*stock)->sizetype)))
+		return (convertprecisionerr(&tmp, &ptr, 1));
+	while (i < (*stock)->width - (*stock)->sizetype)
+		ptr[i++] = '0';
+	if (!convertwidtherror(str, stock, &tmp, &ptr))
+		return (0);
+	return (1);
 }
 
-void	convertwidth(char **str, t_check *stock)
+int		convertwidthforall(char **str, t_check **stock)
+{
+	char	*tmp;
+	char	*ptr;
+	int		i;
+
+	i = 0;
+	if (((*stock)->option == '#' || (*stock)->option2 == '#') &&
+	((*stock)->option == '0' || (*stock)->option2 == '0'))
+		return (convertwidthoptions(str, stock));
+	if (!(ptr = ft_reallocstr(NULL, (*stock)->width - (*stock)->sizetype)))
+		return (0);
+	while (i < (*stock)->width - (*stock)->sizetype)
+		ptr[i++] = (((*stock)->option == '0' || (*stock)->option2 == '0') &&
+	((*stock)->type != 's' && (*stock)->type != 'c')) ? '0' : ' ';
+	i = ft_strlen(*str) - (*stock)->sizetype;
+	if (!(tmp = ft_strsub(*str, i, (*stock)->sizetype)))
+		return (convertprecisionerr(&tmp, &ptr, 2));
+	while ((*str)[i])
+		(*str)[i++] = '\0';
+	if (!(*str = ft_strjoinf(*str, ptr, 3)))
+		return (convertprecisionerr(&tmp, &ptr, 3));
+	if (!(*str = ft_strjoinf(*str, tmp, 3)))
+		return (convertprecisionerr(&tmp, &ptr, 1));
+	return (1);
+}
+
+void	initialization(char **str, t_check **stock)
+{
+	if (((*stock)->option == '+' || (*stock)->option2 == '+' ||
+	(*stock)->sign == '-') && ((*stock)->option == '0' ||
+	(*stock)->option2 == '0'))
+		(*stock)->width--;
+	(*stock)->sizetype = ((((*stock)->option == '+' || (*stock)->option2 == '+')
+	|| ((*stock)->sign == '-')) && ((*stock)->option == '0' ||
+	(*stock)->option2 == '0')) ? ft_strlen(*str) - (*stock)->lenstr - 1 :
+	ft_strlen(*str) - (*stock)->lenstr;
+	if ((*stock)->exception == 1)
+		(*stock)->width++;
+	if ((*stock)->sizetype >= (*stock)->width ||
+	(*stock)->prec >= (*stock)->width)
+		(*stock)->width = 0;
+}
+
+int		convertwidth(char **str, t_check **stock)
 {
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	stock->sizetype = ft_strlen(*str) - stock->lenstr;
-	if (stock->sizetype >= stock->width || stock->prec >= stock->width)
-		stock->width = 0;
-	else
+	initialization(str, stock);
+	if ((*stock)->width != 0)
 	{
-		if (stock->option == '-' || stock->option2 == '-')
+		if ((*stock)->option == '-' || (*stock)->option2 == '-')
 		{
-			tmp = ft_reallocstr(NULL, stock->width - stock->sizetype);
-			while (i < stock->width - stock->sizetype)
-				tmp[i++] = ((stock->option == '0' || stock->option2 == '0') &&
-				(stock->type != 's' && stock->type != 'c')) ? '0' : ' ';
-			*str = ft_strjoinf(*str, tmp, 3);
+			if (!(tmp = ft_reallocstr(NULL,
+			(*stock)->width - (*stock)->sizetype)))
+				return (0);
+			while (i < (*stock)->width - (*stock)->sizetype)
+				tmp[i++] = (((*stock)->option == '0' ||
+				(*stock)->option2 == '0') && ((*stock)->type != 's' &&
+				(*stock)->type != 'c')) ? '0' : ' ';
+			if (!(*str = ft_strjoinf(*str, tmp, 3)))
+				return (convertprecisionerr(&tmp, NULL, 1));
 		}
 		else
-			convertwidth2(str, stock);
+			return (convertwidthforall(str, stock));
 	}
+	return (1);
 }

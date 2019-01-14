@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   freerror.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/13 13:19:46 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/14 18:17:53 by qgirard          ###   ########.fr       */
+/*   Created: 2019/01/11 15:07:57 by qgirard           #+#    #+#             */
+/*   Updated: 2019/01/11 17:49:41 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
 
-int		main(void)
+int		freerror(char **str, t_check **stock, va_list vl)
 {
-//	int fd = 42;
-//	char *str = "DEMIE VOLEE PAVARD";
-	//if (ft_printf("CINQ DOIGTS DE LA MAIN") == 0)
-	//ft_printf("% c\n", 0);
-	//printf("% c\n", 0);
-	ft_printf("@moulitest: %.10d\n", -42);
-	printf("@moulitest: %.10d\n", -42);
+	if (*str)
+		ft_strdel(str);
+	if ((*stock)->size)
+		ft_strdel(&((*stock)->size));
+	free(*stock);
+	va_end(vl);
 	return (0);
 }

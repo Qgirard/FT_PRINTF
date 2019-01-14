@@ -6,7 +6,7 @@
 #    By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/21 12:24:17 by qgirard           #+#    #+#              #
-#    Updated: 2019/01/07 16:11:41 by qgirard          ###   ########.fr        #
+#    Updated: 2019/01/11 17:39:56 by qgirard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ SRC = libft/ft_strlen.c libft/ft_strdup.c libft/ft_strcpy.c libft/ft_strncpy.c \
 		libft/ft_tochartostr.c libft/ft_utoa_base.c libft/ft_reallocstr.c \
 		libft/ft_ltoa.c libft/ft_ultoa_base.c libft/ft_lltoa.c libft/ft_stoa.c \
 		checkoptions.c checktype.c convertinstr.c convertinstrwsize.c \
-		convertwidth.c ft_printf.c
+		convertwidth.c ft_printf.c convertprecision.c exception.c \
+		checksignerror.c convertprecisionprime.c freerror.c
 
 OBJ = $(SRC:.c=.o)
 

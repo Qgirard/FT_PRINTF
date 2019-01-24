@@ -6,17 +6,11 @@
 #    By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/21 12:24:17 by qgirard           #+#    #+#              #
-#    Updated: 2019/01/11 17:39:56 by qgirard          ###   ########.fr        #
+#    Updated: 2019/01/24 18:26:27 by qgirard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-
-FIRST = make -C libft
-
-LAST = make -C libft clean
-
-SUPP = make -C libft fclean
 
 CC = gcc
 
@@ -49,24 +43,24 @@ SRC = libft/ft_strlen.c libft/ft_strdup.c libft/ft_strcpy.c libft/ft_strncpy.c \
 		libft/ft_strnjoinf.c libft/ft_itoa_base.c libft/ft_toupperstr.c \
 		libft/ft_tochartostr.c libft/ft_utoa_base.c libft/ft_reallocstr.c \
 		libft/ft_ltoa.c libft/ft_ultoa_base.c libft/ft_lltoa.c libft/ft_stoa.c \
+		libft/ft_sctoa.c libft/ft_uctoa_base.c libft/ft_ustoa_base.c \
 		checkoptions.c checktype.c convertinstr.c convertinstrwsize.c \
 		convertwidth.c ft_printf.c convertprecision.c exception.c \
-		checksignerror.c convertprecisionprime.c freerror.c
+		checksignerror.c convertprecisionprime.c freerror.c convertfloats.c \
+
 
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-		$(FIRST) && ar rc $(NAME) $(OBJ) $(HEADER)
+		ar rc $(NAME) $(OBJ) $(HEADER)
 		ranlib $(NAME)
 
 clean :
 	rm -rf $(OBJ)
-	$(LAST)
 
 fclean : clean
-	$(SUPP)
 	rm -rf $(NAME)
 
 re : fclean all

@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 16:28:30 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/14 18:32:18 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/24 18:11:57 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		errorcase(char **str, t_check **stock, char *tmp, char *ptr)
 		return (0);
 	if (!(*str = ft_strjoinf(*str, tmp + 1, 1)))
 		return (0);
+	(*stock)->sign = '-';
 	return (1);
 }
 
@@ -53,8 +54,7 @@ int		checksignerror(char **str, t_check **stock, va_list vl)
 		return (0);
 	if (tmp[0] == '-')
 		(*stock)->sign = '-';
-	if (tmp[1] == '-' && (((*stock)->option == '+' || (*stock)->option2 == '+')
-	|| ((*stock)->option == ' ' || (*stock)->option2 == ' ')))
+	if (tmp[1] == '-' && ((*stock)->plus == '+' || (*stock)->space == ' '))
 	{
 		if (!errorcase(str, stock, tmp, NULL))
 		{
@@ -62,7 +62,7 @@ int		checksignerror(char **str, t_check **stock, va_list vl)
 			return (0);
 		}
 	}
-	else if (((*stock)->option == '#' || (*stock)->option2 == '#') &&
+	else if ((*stock)->diez == '#' &&
 	(!ft_strcmp(tmp, "0x0") || !ft_strcmp(tmp, "0X0")))
 	{
 		if (!checksignerror2(str, stock))

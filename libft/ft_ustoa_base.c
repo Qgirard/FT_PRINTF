@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stoa.c                                          :+:      :+:    :+:   */
+/*   ft_ustoa_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/03 14:42:04 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/17 14:57:13 by qgirard          ###   ########.fr       */
+/*   Created: 2019/01/17 15:13:17 by qgirard           #+#    #+#             */
+/*   Updated: 2019/01/17 15:14:48 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_converter(short n, short i, short j)
+static char	*ft_converter(unsigned short n, long i, long j, int base)
 {
 	char *str;
 
@@ -20,39 +20,35 @@ static char	*ft_converter(short n, short i, short j)
 		return (NULL);
 	str[j] = '\0';
 	j--;
-	if (n < 0)
-	{
-		str[0] = '-';
-		n = -n;
-	}
 	if (n == 0)
 		str[j] = '0';
 	while (n != 0)
 	{
-		str[j] = n % 10 + '0';
-		n = n / 10;
+		if (n % base < 10)
+			str[j] = n % base + '0';
+		else
+			str[j] = n % base - 10 + 'a';
+		n = n / base;
 		j--;
 	}
 	return (str);
 }
 
-char		*ft_stoa(short n)
+char		*ft_ustoa_base(unsigned short n, int base)
 {
-	short	i;
-	short	j;
-	short	k;
+	int				i;
+	int				j;
+	unsigned short	k;
 
 	i = 0;
 	k = n;
-	if (n == -32768)
-		return (ft_strdup("-32768"));
 	if (n <= 0)
 		i = 1;
 	while (k != 0)
 	{
-		k = k / 10;
+		k = k / base;
 		i++;
 	}
 	j = i;
-	return (ft_converter(n, i, j));
+	return (ft_converter(n, i, j, base));
 }

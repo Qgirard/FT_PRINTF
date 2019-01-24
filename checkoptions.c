@@ -6,42 +6,23 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 19:01:18 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/14 15:34:22 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/24 19:19:28 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		checkprecision(const char **format, t_check **stock)
+void	checkwidthstar(t_check **stock, va_list vl)
 {
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	if (!(tmp = ft_strnew(0)))
-		return (0);
-	if ((*format)[i] == '.')
+	(*stock)->width = va_arg(vl, int);
+	if ((*stock)->width < 0)
 	{
-		i++;
-		while (ft_isdigit((*format)[i]) == 1)
-		{
-			if (!(tmp = ft_strjoinf(tmp, (char *)&(*format)[i], 1)))
-			{
-				ft_strdel(&tmp);
-				return (0);
-			}
-			i++;
-		}
-		(*stock)->prec = ft_atoi(tmp);
-		*format = *format + i;
+		(*stock)->less = '-';
+		(*stock)->width = (*stock)->width * -1;
 	}
-	else
-		(*stock)->prec = -1;
-	ft_strdel(&tmp);
-	return (checksize(format, stock));
 }
 
-int		checkwidth(const char **format, t_check **stock)
+int		checkwidth(const char **format, t_check **stock, va_list vl)
 {
 	char	*tmp;
 	int		i;
@@ -49,6 +30,8 @@ int		checkwidth(const char **format, t_check **stock)
 	i = 0;
 	if (!(tmp = ft_strnew(0)))
 		return (0);
+	if ((*format)[0] == '*')
+		checkwidthstar(stock, vl);
 	while (ft_isdigit((*format)[i]) == 1)
 	{
 		if (!(tmp = ft_strjoinf(tmp, (char *)&(*format)[i], 1)))
@@ -60,75 +43,47 @@ int		checkwidth(const char **format, t_check **stock)
 	}
 	if (i > 0)
 		(*stock)->width = ft_atoi(tmp);
-	else
+	else if ((*format)[0] != '*')
 		(*stock)->width = 0;
-	*format = *format + i;
+	*format = ((*format)[0] == '*') ? *format + 1 : *format + i;
 	ft_strdel(&tmp);
 	return (checkprecision(format, stock));
 }
 
-void	checkmoreoptions(const char **format, t_check **stock)
-{
-	if ((*format)[0] == '+')
-	{
-		(*stock)->option2 = '+';
-		while ((*format)[1] == '+')
-			*format = *format + 1;
-	}
-	else if ((*format)[0] == ' ')
-	{
-		(*stock)->option2 = ' ';
-		while ((*format)[1] == ' ')
-			*format = *format + 1;
-	}
-}
-
-int		checkoption2(const char **format, t_check **stock)
-{
-	if ((*format)[0] == '#')
-		(*stock)->option2 = '#';
-	else if ((*format)[0] == '0' && (*stock)->option != '-')
-		(*stock)->option2 = '0';
-	else if ((*format)[0] == '-')
-	{
-		(*stock)->option2 = '-';
-		if ((*stock)->option == '0')
-			(*stock)->option = 0;
-	}
-	else if ((*format)[0] == '+' || (*format)[0] == ' ')
-		checkmoreoptions(format, stock);
-	else
-		(*stock)->option2 = 0;
-	if ((*stock)->option2 != 0)
-		*format = *format + 1;
-	return (checkwidth(format, stock));
-}
-
-int		checkoptions(const char **format, t_check **stock)
+void	checkoptions2(const char **format, t_check **stock)
 {
 	if ((*format)[1] == '#')
-		(*stock)->option = '#';
+		(*stock)->diez = '#';
 	else if ((*format)[1] == '0')
-		(*stock)->option = '0';
+		(*stock)->zero = '0';
 	else if ((*format)[1] == '-')
-		(*stock)->option = '-';
+		(*stock)->less = '-';
 	else if ((*format)[1] == '+')
 	{
-		(*stock)->option = '+';
+		(*stock)->plus = '+';
 		while ((*format)[2] == '+')
 			*format = *format + 1;
 	}
 	else if ((*format)[1] == ' ')
 	{
-		(*stock)->option = ' ';
+		(*stock)->space = ' ';
 		while ((*format)[2] == ' ')
 			*format = *format + 1;
 	}
-	else
-		(*stock)->option = 0;
-	if ((*stock)->option != 0)
-		*format = *format + 2;
-	else
+}
+
+int		checkoptions(const char **format, t_check **stock, va_list vl)
+{
+	while (((*format)[1] == '#' || (*format)[1] == '0' || (*format)[1] == '-' ||
+	(*format)[1] == '+' || (*format)[1] == ' '))
+	{
+		checkoptions2(format, stock);
 		*format = *format + 1;
-	return (checkoption2(format, stock));
+	}
+	if ((*stock)->less == '-')
+		(*stock)->zero = 0;
+	if ((*stock)->plus == '+')
+		(*stock)->space = 0;
+	*format = *format + 1;
+	return (checkwidth(format, stock, vl));
 }

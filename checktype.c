@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 14:53:34 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/11 18:26:13 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/24 19:21:50 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ int		checktype(const char **format, t_check **stock)
 		(*stock)->type = 's';
 	else if ((*format)[0] == 'p')
 		(*stock)->type = 'p';
-	else if ((*format)[0] == 'd' || (*format)[0] == 'D')
-		(*stock)->type = 'd';
-	else if ((*format)[0] == 'i')
-		(*stock)->type = 'i';
-	else if ((*format)[0] == 'o')
-		(*stock)->type = 'o';
+	else if ((*format)[0] == 'd' || (*format)[0] == 'D' || (*format)[0] == 'i')
+		(*stock)->type = ((*format)[0] == 'D') ? 'D' : 'd';
+	else if ((*format)[0] == 'o' || (*format)[0] == 'O')
+		(*stock)->type = ((*format)[0] == 'o') ? 'o' : 'O';
 	else if ((*format)[0] == 'u' || (*format)[0] == 'U')
-		(*stock)->type = 'u';
+		(*stock)->type = ((*format)[0] == 'u') ? 'u' : 'U';
 	else if ((*format)[0] == 'x' || (*format)[0] == 'X')
 		(*stock)->type = ((*format)[0] == 'x') ? 'x' : 'X';
 	else if ((*format)[0] == 'f')
@@ -36,7 +34,8 @@ int		checktype(const char **format, t_check **stock)
 		(*stock)->type = ((*format)[0] == '%') ? '%' : 'b';
 	else
 		(*stock)->type = 0;
-	*format = *format + 1;
+	if ((*stock)->type != 0)
+		*format = *format + 1;
 	return (1);
 }
 
@@ -82,4 +81,33 @@ int		checksize(const char **format, t_check **stock)
 		*format = *format + ft_strlen((*stock)->size);
 	}
 	return (checklittlesize(format, stock));
+}
+
+int		checkprecision(const char **format, t_check **stock)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	if (!(tmp = ft_strnew(0)))
+		return (0);
+	if ((*format)[i] == '.')
+	{
+		i++;
+		while (ft_isdigit((*format)[i]) == 1)
+		{
+			if (!(tmp = ft_strjoinf(tmp, (char *)&(*format)[i], 1)))
+			{
+				ft_strdel(&tmp);
+				return (0);
+			}
+			i++;
+		}
+		(*stock)->prec = ft_atoi(tmp);
+		*format = *format + i;
+	}
+	else
+		(*stock)->prec = -1;
+	ft_strdel(&tmp);
+	return (checksize(format, stock));
 }

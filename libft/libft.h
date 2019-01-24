@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 16:55:13 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/03 14:45:08 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/18 19:04:38 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,8 @@ char				*ft_ltoa(long n);
 char				*ft_ultoa_base(unsigned long n, int base);
 char				*ft_lltoa(long long n);
 char				*ft_stoa(short n);
+char				*ft_ustoa_base(unsigned short n, int base);
+char				*ft_sctoa(signed char n);
+char				*ft_uctoa_base(unsigned char n, int base);
 
 #endif

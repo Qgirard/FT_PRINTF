@@ -6,12 +6,11 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:38:00 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/14 18:29:28 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/24 19:24:19 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 int		convertprecisionwos(char **str, t_check **stock)
 {
@@ -38,9 +37,8 @@ int		convertprecisionwos(char **str, t_check **stock)
 
 int		convertprecision(char **str, t_check **stock, va_list vl)
 {
-	(*stock)->sizetype = (((*stock)->option == '+' || (*stock)->option2 == '+')
-	|| ((*stock)->option == ' ' || (*stock)->option2 == ' ') ||
-	((*stock)->sign) == '-') ? ft_strlen(*str) - (*stock)->lenstr - 1 :
+	(*stock)->sizetype = ((*stock)->plus == '+' || (*stock)->space == ' ' ||
+	(*stock)->sign == '-') ? ft_strlen(*str) - (*stock)->lenstr - 1 :
 	ft_strlen(*str) - (*stock)->lenstr;
 	if ((*stock)->prec && (*stock)->prec != -1 &&
 	(*stock)->prec > (*stock)->sizetype && (*stock)->type != 's')

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stoa.c                                          :+:      :+:    :+:   */
+/*   ft_sctoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/03 14:42:04 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/17 14:57:13 by qgirard          ###   ########.fr       */
+/*   Created: 2019/01/17 15:24:48 by qgirard           #+#    #+#             */
+/*   Updated: 2019/01/17 16:03:39 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_converter(short n, short i, short j)
+static char	*ft_converter(signed char n, short i, short j)
 {
 	char *str;
 
@@ -36,16 +36,16 @@ static char	*ft_converter(short n, short i, short j)
 	return (str);
 }
 
-char		*ft_stoa(short n)
+char		*ft_sctoa(signed char n)
 {
-	short	i;
-	short	j;
-	short	k;
+	short		i;
+	short		j;
+	signed char	k;
 
 	i = 0;
 	k = n;
-	if (n == -32768)
-		return (ft_strdup("-32768"));
+	if (n == -128)
+		return (ft_strdup("-128"));
 	if (n <= 0)
 		i = 1;
 	while (k != 0)

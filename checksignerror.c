@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 16:28:30 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 18:11:57 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/31 20:09:44 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ int		errorcase(char **str, t_check **stock, char *tmp, char *ptr)
 	return (1);
 }
 
-int		checksignerror(char **str, t_check **stock, va_list vl)
+int		checksignerror(char **str, t_check **stock, va_list vl,
+		t_excep **current)
 {
 	char	*tmp;
 
+	(*stock)->sign = 0;
 	if (!(tmp = ft_strsub(*str, (*stock)->lenstr, ft_strlen(*str))))
 		return (0);
 	if (tmp[0] == '-')
@@ -69,5 +71,5 @@ int		checksignerror(char **str, t_check **stock, va_list vl)
 			return (0);
 	}
 	ft_strdel(&tmp);
-	return (exception(str, stock, vl));
+	return (exception(str, stock, vl, current));
 }

@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/17 19:01:18 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 19:19:28 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/31 14:45:31 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ void	checkoptions2(const char **format, t_check **stock)
 
 int		checkoptions(const char **format, t_check **stock, va_list vl)
 {
+	(*stock)->diez = 0;
+	(*stock)->zero = 0;
+	(*stock)->plus = 0;
+	(*stock)->less = 0;
+	(*stock)->space = 0;
 	while (((*format)[1] == '#' || (*format)[1] == '0' || (*format)[1] == '-' ||
 	(*format)[1] == '+' || (*format)[1] == ' '))
 	{

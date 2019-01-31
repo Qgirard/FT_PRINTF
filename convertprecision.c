@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 16:02:21 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 17:44:15 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/31 18:18:33 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,28 @@ int		convertprecisionforhexa(char **str, t_check **stock)
 int		convert0precisionex(char **str, t_check **stock, char *tmp, char *ptr)
 {
 	if (((*stock)->type == 'x' || (*stock)->type == 'X' ||
-	(*stock)->type == 'o' || (*stock)->type == 'O' || (*stock)->type == 'd' ||
-	(*stock)->type == 'D') && !ft_strcmp(tmp, "0") && (*stock)->prec > -1)
+	(*stock)->type == 'o' || (*stock)->type == 'O' || (*stock)->type == 'u' ||
+	(*stock)->type == 'd' || (*stock)->type == 'D') &&
+	!ft_strcmp(tmp, "0") && (*stock)->prec > -1)
 	{
 		ft_strdel(str);
-		if (!(*str = ft_strdup(ptr)))
-			return (0);
+		*str = ft_strdup(ptr);
+	}
+	if ((*stock)->type == 'p' && !ft_strcmp(tmp, "0x0") && (*stock)->prec == 0)
+	{
+		ft_strdel(str);
+		*str = ft_strdup(ptr);
+		*str = ft_strjoinf(*str, "0x", 1);
 	}
 	if (((*stock)->type == 'o' || (*stock)->type == 'O') &&
 	!ft_strcmp(tmp, "00"))
 	{
 		ft_strdel(str);
-		if (!(*str = ft_strdup(ptr)))
-			return (0);
-		if (!(*str = ft_strjoinf(*str, "0", 1)))
-			return (0);
+		*str = ft_strdup(ptr);
+		*str = ft_strjoinf(*str, "0", 1);
 	}
+	if (!*str)
+		return (0);
 	return (1);
 }
 

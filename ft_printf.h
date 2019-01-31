@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 13:12:04 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 19:16:37 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/31 19:55:05 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,41 @@ typedef struct	s_check
 	int		type;
 	int		lenstr;
 	int		sizetype;
-	int		exception;
+	int		ex;
 	int		sign;
 	int		sshort;
+	int		colour;
+	int		decimal;
+	long	bigdecimal;
 	double	number;
 }				t_check;
+
+typedef struct	s_excep
+{
+	int				x;
+	struct s_excep	*next;
+}				t_excep;
 
 int				ft_printf(const char *format, ...);
 int				checkoptions(const char **format, t_check **stock, va_list vl);
 int				checkprecision(const char **format, t_check **stock);
-int				convertinstr(char **str, t_check **stock, va_list vl);
+int				convertinstr(char **str, t_check **stock, va_list vl,
+				t_excep **current);
 int				convertwidth(char **str, t_check **stock);
-int				convertinstrwsize(char **str, t_check **stock, va_list vl);
+int				convertinstrwsize(char **str, t_check **stock, va_list vl,
+				t_excep **current);
 int				convertprecision(char **str, t_check **stock, va_list vl);
-int				checksignerror(char **str, t_check **stock, va_list vl);
+int				checksignerror(char **str, t_check **stock, va_list vl,
+				t_excep **current);
 int				convert0precision(char **str, t_check **stock, va_list vl);
-int				exception(char **str, t_check **stock, va_list vl);
+int				exception(char **str, t_check **stock, va_list vl,
+				t_excep **current);
 int				convertprecisionerr(char **tmp, char **ptr, int rm);
-int				freerror(char **str, t_check **stock, va_list vl);
-int				majexception(char **str, t_check **stock, va_list vl);
+int				freerror(char **str, t_check **stock, va_list vl, int i);
+int				majexception(char **str, t_check **stock, va_list vl,
+				t_excep **current);
 int				convertfloats(char **str, t_check **stock, va_list vl);
+int				lastfree(char **str, t_check **stock, t_excep **curent, int i);
+int				lists(char **str, t_check **stock, t_excep **current);
 
 #endif

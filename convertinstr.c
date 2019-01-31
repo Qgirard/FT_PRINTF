@@ -6,13 +6,14 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:12:29 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 18:38:16 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/31 20:09:55 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		convertinstrwint(char **str, t_check **stock, va_list vl)
+int		convertinstrwint(char **str, t_check **stock, va_list vl,
+		t_excep **current)
 {
 	if ((*stock)->type == 'd')
 		*str = ft_strjoinf(*str, ft_itoa(va_arg(vl, int)), 3);
@@ -38,11 +39,13 @@ int		convertinstrwint(char **str, t_check **stock, va_list vl)
 		ft_toupperstr(ft_utoa_base(va_arg(vl, unsigned int), 16)), 3);
 	if (!*str)
 		return (0);
-	return (checksignerror(str, stock, vl));
+	return (checksignerror(str, stock, vl, current));
 }
 
-int		convertinstrwoptions(char **str, t_check **stock, va_list vl)
+int		convertinstrwoptions(char **str, t_check **stock, va_list vl,
+		t_excep **current)
 {
+	(*stock)->charzero = 1;
 	if ((*stock)->diez == '#' || (*stock)->type == 'p')
 	{
 		if ((*stock)->type == 'x' || (*stock)->type == 'p')
@@ -56,16 +59,16 @@ int		convertinstrwoptions(char **str, t_check **stock, va_list vl)
 	}
 	if ((*stock)->size == NULL && (*stock)->type != 'U' &&
 	(*stock)->type != 'f' && (*stock)->type != 'O' && (*stock)->type != 'D')
-		return (convertinstrwint(str, stock, vl));
+		return (convertinstrwint(str, stock, vl, current));
 	else if ((*stock)->size != NULL || (*stock)->type == 'U' ||
 	(*stock)->type == 'D' || (*stock)->type == 'O')
-		return (convertinstrwsize(str, stock, vl));
+		return (convertinstrwsize(str, stock, vl, current));
 	else if ((*stock)->type == 'f')
 		return (convertfloats(str, stock, vl));
 	return (1);
 }
 
-int		convertinstr(char **str, t_check **stock, va_list vl)
+int		convertinstr(char **str, t_check **stock, va_list vl, t_excep **current)
 {
 	(*stock)->lenstr = ft_strlen(*str);
 	if ((*stock)->type == 0)
@@ -79,16 +82,17 @@ int		convertinstr(char **str, t_check **stock, va_list vl)
 	{
 		if (!(*str = ft_strjoinf(*str, "%", 1)))
 			return (0);
+		(*stock)->prec = -1;
 	}
-	else if ((*stock)->plus == '+' && (*stock)->type == 'd')
+	else if ((*stock)->plus == '+' && ((*stock)->type == 'd' ||
+	(*stock)->type == 'D'))
 	{
 		if (!(*str = ft_strjoinf(*str, "+", 1)))
 			return (0);
 	}
-	else if ((*stock)->space == ' ' && (*stock)->type == 'd')
-	{
+	else if ((*stock)->space == ' ' && ((*stock)->type == 'd' ||
+	(*stock)->type == 'D'))
 		if (!(*str = ft_strjoinf(*str, " ", 1)))
 			return (0);
-	}
-	return (convertinstrwoptions(str, stock, vl));
+	return (convertinstrwoptions(str, stock, vl, current));
 }

@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:47:23 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 19:24:22 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/31 19:02:57 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,15 @@ int		convertwidthforall(char **str, t_check **stock)
 void	initialization(char **str, t_check **stock)
 {
 	if (((*stock)->plus == '+' || (*stock)->sign == '-' ||
-	(*stock)->space == ' ') && ((*stock)->type == 'd') &&
-	((*stock)->zero == '0'))
+	(*stock)->space == ' ') && ((*stock)->type == 'd' ||
+	(*stock)->type == 'D') && ((*stock)->zero == '0'))
 		(*stock)->width--;
 	(*stock)->sizetype = (((*stock)->plus == '+' || (*stock)->sign == '-' ||
-	(*stock)->space == ' ') && ((*stock)->type == 'd') &&
-	((*stock)->zero == '0')) ? ft_strlen(*str) - (*stock)->lenstr - 1 :
+	(*stock)->space == ' ') && ((*stock)->type == 'd' ||
+	(*stock)->type == 'D') && ((*stock)->zero == '0')) ?
+	ft_strlen(*str) - (*stock)->lenstr - 1 :
 	ft_strlen(*str) - (*stock)->lenstr;
-	if ((*stock)->exception == 1)
+	if ((*stock)->ex > 0)
 		(*stock)->width++;
 	if ((*stock)->sizetype >= (*stock)->width ||
 	((*stock)->prec > (*stock)->width && (*stock)->type != 's'))

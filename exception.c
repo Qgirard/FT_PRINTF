@@ -6,13 +6,13 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:56:26 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 17:17:21 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/01/31 20:10:31 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		majexception(char **str, t_check **stock, va_list vl)
+int		majexception(char **str, t_check **stock, va_list vl, t_excep **current)
 {
 	if ((*stock)->type == 'D')
 		*str = ft_strjoinf(*str, ft_ltoa(va_arg(vl, long)), 3);
@@ -24,17 +24,19 @@ int		majexception(char **str, t_check **stock, va_list vl)
 		8), 3);
 	if (!*str)
 		return (0);
-	return (checksignerror(str, stock, vl));
+	return (checksignerror(str, stock, vl, current));
 }
 
-int		exception(char **str, t_check **stock, va_list vl)
+int		exception(char **str, t_check **stock, va_list vl, t_excep **current)
 {
 	if ((*stock)->type == 'c')
 	{
 		(*stock)->prec = -1;
 		if ((*stock)->charzero == 0)
 		{
-			(*stock)->exception = 1;
+			if (!lists(str, stock, current))
+				return (lastfree(str, stock, current, 0));
+			(*stock)->ex = ((*stock)->ex) ? (*stock)->ex + 1 : 1;
 			if (!(*str = ft_strjoinf(*str, "^@", 1)))
 				return (0);
 		}
@@ -42,7 +44,7 @@ int		exception(char **str, t_check **stock, va_list vl)
 			*str = ft_strjoinf(*str, ft_tochartostr((*stock)->charzero), 3);
 	}
 	if ((*stock)->prec != -1 && (*stock)->prec < (*stock)->width &&
-	(*stock)->zero == '0')
+	(*stock)->zero == '0' && (*stock)->type != 's')
 		(*stock)->zero = 0;
 	return (convert0precision(str, stock, vl));
 }

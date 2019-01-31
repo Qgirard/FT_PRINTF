@@ -6,7 +6,7 @@
 #    By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/21 12:24:17 by qgirard           #+#    #+#              #
-#    Updated: 2019/01/24 18:26:27 by qgirard          ###   ########.fr        #
+#    Updated: 2019/01/31 17:12:52 by qgirard          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ SRC = libft/ft_strlen.c libft/ft_strdup.c libft/ft_strcpy.c libft/ft_strncpy.c \
 		checkoptions.c checktype.c convertinstr.c convertinstrwsize.c \
 		convertwidth.c ft_printf.c convertprecision.c exception.c \
 		checksignerror.c convertprecisionprime.c freerror.c convertfloats.c \
-
+		lists.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -56,6 +56,9 @@ all : $(NAME)
 $(NAME) : $(OBJ)
 		ar rc $(NAME) $(OBJ) $(HEADER)
 		ranlib $(NAME)
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c -I $(HEADER) $< -o $@
 
 clean :
 	rm -rf $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:56:26 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/31 20:10:31 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/01 18:22:32 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		majexception(char **str, t_check **stock, va_list vl, t_excep **current)
 {
 	if ((*stock)->type == 'D')
-		*str = ft_strjoinf(*str, ft_ltoa(va_arg(vl, long)), 3);
+		(*stock)->bigdecimal = va_arg(vl, long);
 	else if ((*stock)->type == 'U')
 		*str = ft_strjoinf(*str, ft_ultoa_base(va_arg(vl, unsigned long),
 		10), 3);
@@ -29,11 +29,13 @@ int		majexception(char **str, t_check **stock, va_list vl, t_excep **current)
 
 int		exception(char **str, t_check **stock, va_list vl, t_excep **current)
 {
+	(*stock)->checkex = 0;
 	if ((*stock)->type == 'c')
 	{
 		(*stock)->prec = -1;
-		if ((*stock)->charzero == 0)
+		if ((*stock)->charzero == 0 || (*stock)->charzero == 256)
 		{
+			(*stock)->checkex = 1;
 			if (!lists(str, stock, current))
 				return (lastfree(str, stock, current, 0));
 			(*stock)->ex = ((*stock)->ex) ? (*stock)->ex + 1 : 1;

@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:12:29 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/31 20:09:55 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/01 18:01:39 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		convertinstrwint(char **str, t_check **stock, va_list vl,
 		t_excep **current)
 {
 	if ((*stock)->type == 'd')
-		*str = ft_strjoinf(*str, ft_itoa(va_arg(vl, int)), 3);
+		(*stock)->decimal = va_arg(vl, int);
 	else if ((*stock)->type == 'u')
 		*str = ft_strjoinf(*str, ft_utoa_base(va_arg(vl, unsigned int),
 		10), 3);

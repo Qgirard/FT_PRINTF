@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 16:28:30 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/31 20:09:44 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/01 17:57:28 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		checksignerror2(char **str, t_check **stock)
 		ft_strdel(&ptr);
 		return (0);
 	}
+	(*stock)->hexaex = 1;
 	ft_strdel(&ptr);
 	return (1);
 }
@@ -46,12 +47,33 @@ int		errorcase(char **str, t_check **stock, char *tmp, char *ptr)
 	return (1);
 }
 
+int		checkexcep(char **str, t_check **stock)
+{
+	if ((*stock)->type == 'd' && (*stock)->size == NULL)
+	{
+		if (!(((*stock)->prec == 0 && (*stock)->decimal == 0) &&
+		((*stock)->plus == '+' || (*stock)->space == ' ')))
+			if (!(*str = ft_strjoinf(*str, ft_itoa((*stock)->decimal), 3)))
+				return (0);
+	}
+	else if ((*stock)->type == 'D')
+	{
+		if (!(((*stock)->prec == 0 && (*stock)->bigdecimal == 0) &&
+		((*stock)->plus == '+' || (*stock)->space == ' ')))
+			if (!(*str = ft_strjoinf(*str, ft_ltoa((*stock)->bigdecimal), 3)))
+				return (0);
+	}
+	return (1);
+}
+
 int		checksignerror(char **str, t_check **stock, va_list vl,
 		t_excep **current)
 {
 	char	*tmp;
 
 	(*stock)->sign = 0;
+	if (!(checkexcep(str, stock)))
+		return (0);
 	if (!(tmp = ft_strsub(*str, (*stock)->lenstr, ft_strlen(*str))))
 		return (0);
 	if (tmp[0] == '-')

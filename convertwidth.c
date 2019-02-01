@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:47:23 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/31 19:02:57 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/01 17:15:44 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,22 @@
 
 int		convertwidtherror(char **str, t_check **stock, char **tmp, char **ptr)
 {
-	if (!(*str = ((*stock)->type == 'x') ? ft_strjoinf(*str, "0x", 1) :
-	ft_strjoinf(*str, "0X", 1)))
-		return (convertprecisionerr(tmp, ptr, 3));
+	if (!(*stock)->hexaex)
+	{
+		if (!(*str = ((*stock)->type == 'x') ? ft_strjoinf(*str, "0x", 1) :
+		ft_strjoinf(*str, "0X", 1)))
+			return (convertprecisionerr(tmp, ptr, 3));
+	}
+	else
+	{
+		if (!(*str = ft_strjoinf(*str, "0", 1)))
+			return (convertprecisionerr(tmp, ptr, 3));
+	}
 	if (!(*str = ft_strjoinf(*str, *ptr, 3)))
 		return (convertprecisionerr(tmp, ptr, 3));
 	if (!(*str = ft_strjoinf(*str, *tmp, 3)))
 		return (convertprecisionerr(tmp, ptr, 1));
+	(*stock)->hexaex = 0;
 	return (1);
 }
 
@@ -56,7 +65,8 @@ int		convertwidthforall(char **str, t_check **stock)
 	int		i;
 
 	i = 0;
-	if ((*stock)->diez == '#' && (*stock)->zero == '0')
+	if ((*stock)->diez == '#' && (*stock)->zero == '0' &&
+	((*stock)->type == 'x' || (*stock)->type == 'X'))
 		return (convertwidthoptions(str, stock));
 	if (!(ptr = ft_reallocstr(NULL, (*stock)->width - (*stock)->sizetype)))
 		return (0);
@@ -85,7 +95,7 @@ void	initialization(char **str, t_check **stock)
 	(*stock)->type == 'D') && ((*stock)->zero == '0')) ?
 	ft_strlen(*str) - (*stock)->lenstr - 1 :
 	ft_strlen(*str) - (*stock)->lenstr;
-	if ((*stock)->ex > 0)
+	if ((*stock)->checkex == 1)
 		(*stock)->width++;
 	if ((*stock)->sizetype >= (*stock)->width ||
 	((*stock)->prec > (*stock)->width && (*stock)->type != 's'))

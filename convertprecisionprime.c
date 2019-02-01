@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 17:38:00 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/24 19:24:19 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/01 18:17:28 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ int		convertprecision(char **str, t_check **stock, va_list vl)
 		(*stock)->prec), 3)))
 			return (0);
 	}
+	else if ((*stock)->type == 's' && (*stock)->prec == 0)
+		va_arg(vl, char *);
 	return (convertwidth(str, stock));
 }

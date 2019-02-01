@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 16:02:21 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/31 18:18:33 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/01 18:16:19 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int		convertprecisionforhexa(char **str, t_check **stock)
 	char	*tmp;
 	char	*ptr;
 
-	(*stock)->sizetype = ft_strlen(*str) - (*stock)->lenstr;
+	(*stock)->sizetype = ((*stock)->prec > 0 && (*stock)->diez == '#') ?
+	ft_strlen(*str) - (*stock)->lenstr - 2 : ft_strlen(*str) - (*stock)->lenstr;
 	if ((*stock)->prec && (*stock)->prec != -1 &&
 	(*stock)->prec > (*stock)->sizetype)
 	{
@@ -69,7 +70,7 @@ int		convert0precisionex(char **str, t_check **stock, char *tmp, char *ptr)
 {
 	if (((*stock)->type == 'x' || (*stock)->type == 'X' ||
 	(*stock)->type == 'o' || (*stock)->type == 'O' || (*stock)->type == 'u' ||
-	(*stock)->type == 'd' || (*stock)->type == 'D') &&
+	(*stock)->type == 'U' || (*stock)->type == 'd' || (*stock)->type == 'D') &&
 	!ft_strcmp(tmp, "0") && (*stock)->prec > -1)
 	{
 		ft_strdel(str);
@@ -98,7 +99,9 @@ int		convert0precision(char **str, t_check **stock, va_list vl)
 	char	*tmp;
 	char	*ptr;
 
-	if ((*stock)->prec == 0 || (*stock)->prec == -1)
+	if (((*stock)->type != 's') && (((*stock)->prec == 0 ||
+	(*stock)->prec == -1) || (((*stock)->type == 'o' ||
+	(*stock)->type == 'O') && ((*stock)->prec <= 1) && (*stock)->diez == '#')))
 	{
 		if (!(ptr = ft_strsub(*str, 0, (*stock)->lenstr)))
 			return (0);

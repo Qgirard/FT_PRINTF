@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 13:12:04 by qgirard           #+#    #+#             */
-/*   Updated: 2019/01/31 19:55:05 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/01 18:17:53 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef struct	s_check
 	int		ex;
 	int		sign;
 	int		sshort;
+	int		checkex;
 	int		colour;
+	int		hexaex;
 	int		decimal;
 	long	bigdecimal;
 	double	number;

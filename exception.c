@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 13:56:26 by qgirard           #+#    #+#             */
-/*   Updated: 2019/02/01 18:22:32 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/03 16:29:55 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int		majexception(char **str, t_check **stock, va_list vl, t_excep **current)
 int		exception(char **str, t_check **stock, va_list vl, t_excep **current)
 {
 	(*stock)->checkex = 0;
+	if ((*stock)->type == 0)
+		(*stock)->width--;
 	if ((*stock)->type == 'c')
 	{
 		(*stock)->prec = -1;

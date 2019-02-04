@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 13:11:40 by qgirard           #+#    #+#             */
-/*   Updated: 2019/02/01 16:45:43 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/03 16:20:45 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ int		ft_printf(const char *format, ...)
 	while (checkpercent(&format, &str, &stock))
 	{
 		if (!checkoptions(&format, &stock, vl))
-			return (freerror(&str, &stock, vl, 0));
+			return (freerror(&str, &stock, vl, -1));
 		if (!convertinstr(&str, &stock, vl, &current))
-			return (freerror(&str, &stock, vl, 0));
+			return (freerror(&str, &stock, vl, -1));
 		ft_strdel(&stock->size);
 	}
 	va_end(vl);

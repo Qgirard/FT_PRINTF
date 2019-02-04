@@ -6,7 +6,7 @@
 /*   By: qgirard <qgirard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 14:53:34 by qgirard           #+#    #+#             */
-/*   Updated: 2019/02/01 17:53:07 by qgirard          ###   ########.fr       */
+/*   Updated: 2019/02/04 10:32:08 by qgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		checktype(const char **format, t_check **stock)
 {
-	if ((*format)[0] == 'c')
+	if ((*format)[0] == 'c' || (*format)[0] == 'C')
 		(*stock)->type = 'c';
 	else if ((*format)[0] == 's')
 		(*stock)->type = 's';
@@ -28,7 +28,7 @@ int		checktype(const char **format, t_check **stock)
 		(*stock)->type = ((*format)[0] == 'u') ? 'u' : 'U';
 	else if ((*format)[0] == 'x' || (*format)[0] == 'X')
 		(*stock)->type = ((*format)[0] == 'x') ? 'x' : 'X';
-	else if ((*format)[0] == 'f')
+	else if ((*format)[0] == 'f' || (*format)[0] == 'F')
 		(*stock)->type = 'f';
 	else if ((*format)[0] == '%' || (*format)[0] == 'b')
 		(*stock)->type = ((*format)[0] == '%') ? '%' : 'b';
